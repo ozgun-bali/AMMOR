@@ -155,7 +155,18 @@ class PricingSolver:
 
 def get_parameters(instance):
     # TODO START
-    p = None
+    p = columngenerationsolverpy.Parameters(len(instance.items)*len(instance.capacities))
+    p.objective_sense = "max"
+
+    p.column_lower_bound = 0;
+    p.column_upper_bound = 1;
+
+    for item in instance.items:
+        p.row_lower_bounds[item.id] = item.profit
+        p.row_upper_bounds[item.id] = item.profit
+        p.row_coefficient_lower_bounds[item.id] = 0
+        p.row_coefficient_upper_bounds[item.id]
+
     # TODO END
     # Pricing solver.
     p.pricing_solver = PricingSolver(instance)
